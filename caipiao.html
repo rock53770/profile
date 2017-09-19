@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>彩票</title>
+<style>
+ul li{width:40px; height:40px; background:red; color:white; font-size:16px; float:left; margin-right:20px; border-radius:50%; line-height:40px; text-align:center; font-weight:bolder;}
+input{height:30px; width:100px; background:#ccc; cursor:pointer;}
+</style>
+<script>
+function rnd(n,m){
+	return parseInt(Math.random()*(m-n) + n);
+}
+function addZero(n){
+	return n < 10 ? '0'+n : ''+n;
+}
+function findInArr(arr, n){
+	for(var i=0; i<arr.length; i++){
+		if(arr[i] == n){
+			return true;
+		}
+	}
+	return false;
+}
+window.onload=function(){
+	var oUl = document.getElementById('ul1');
+	var aLi = oUl.getElementsByTagName('li');
+	var oBtn = document.getElementById('btn1');
+	
+	var timer=null;
+	oBtn.onclick=caiPiao;
+	caiPiao();
+	function caiPiao(){
+		clearInterval(timer);
+		timer=setInterval(function(){
+			var arr=[];
+			while(arr.length<6){
+				var n = rnd(1,34);
+				if(!findInArr(arr,n)){
+					arr.push(n);
+				}
+			}
+			arr.sort(function(n1,n2){
+				return n1-n2;
+			});
+			for(var i=0; i<aLi.length; i++){
+				aLi[i].innerHTML = addZero(arr[i]);	
+			}
+		},30);
+		setTimeout(function(){
+			clearInterval(timer);
+		},800);
+	};
+};
+</script>
+</head>
+
+<body>
+<div class="div1">
+	<ul id="ul1">
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    	<li></li>
+    </ul>
+    <input value="换一换" type="button" id="btn1"/>
+</div>
+</body>
+</html>

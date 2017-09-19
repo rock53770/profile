@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>模拟留言板</title>
+<style>
+* { padding: 0; margin: 0; }
+li { list-style: none; }
+#parent { width: 600px; margin: 0 auto; }
+h4 { line-height: 40px; margin-bottom: 10px; border-bottom: 1px solid #333; }
+p { width: 100%; background: #f1f1f1; position: relative; margin-bottom: 25px; }
+#box { width: 580px; padding: 25px 10px 0; border: 1px solid #ddd; margin-bottom: 10px; }
+span { position: absolute; top: -20px; right: 0px; }
+em { position: relative; top: -13px; }
+#text { width: 100%; height: 90px; overflow: auto; }
+#btn { width: 100%; height: 50px; }
+</style>
+<script>
+window.onload=function(){
+	var oBox = document.getElementById('box');
+	var oParent= document.getElementById('parent');
+	var oTxt = document.getElementById('text');
+	var oBtn = document.getElementById('btn');
+	var i=1;
+	var bClick=false
+	oBtn.onclick=function(){
+		if(!bClick){
+			oBox.innerHTML = ""; bClick=true;
+		}
+		
+		var oP=document.createElement('p');
+		oP.innerHTML = i+ '. ' + oTxt.value;
+		i++;
+	
+		oBox.appendChild(oP);
+		oP.onmouseover=function(){
+			oP.style.background = 'yellow';
+			var oSpan= document.createElement('span');
+			oSpan.innerHTML = '确定要删除'+oP.innerHTML+'吗？';
+			oP.appendChild(oSpan);		
+		};
+		oP.onmouseout=function(){
+			oP.style.background = '#fff';
+			oP.removeChild(this.children[0]);
+		};
+		oP.onclick=function(){
+			oP.parentNode.removeChild(oP);
+			if( document.getElementById("box").innerHTML == "" ) {
+				document.getElementById("box").innerHTML = "<em>这里会显示留言内容……</em>";
+			}
+			bClick=false;
+		};
+	};
+	
+};
+</script>
+</head>
+<body>
+<div id="parent">
+	<h4>留言内容：</h4>
+	<div id="box"><em>这里会显示留言内容……</em></div>
+	<textarea id="text"></textarea><br />
+	<input id="btn" type="button" onclick="fn()" value="发表留言" />
+</div>
+</body>
+</html>

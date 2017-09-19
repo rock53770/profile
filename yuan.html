@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>圆</title>
+<style>
+#box{height:400px; width:400px; border:1px solid #ccc; position:relative; margin:40px auto; border-radius:50%;}
+#box div{height:40px; width:40px; background:red; position:absolute; top:0; left:200px; margin-top:-20px; margin-left:-20px; border-radius:50%;}
+</style>
+<script>
+function aTr(n){
+	return 	n * Math.PI/180;
+}
+window.onload = function(){
+	var oBox = document.getElementById('box');
+	//var oDiv = document.getElementById('div1');
+	var R = oBox.offsetWidth/2;
+	
+	var N=6;
+	for(var i=0; i<N ; i++){
+		var oDiv = document.createElement('div');
+		oBox.appendChild(oDiv);
+	}
+	var aDiv = oBox.children;
+	
+	var bClick = false;
+	
+	document.onclick = function(){
+		bClick = !bClick;
+		if(bClick){
+			for(var i=0; i<aDiv.length; i++){
+				var a = 360/aDiv.length * i;
+				move(aDiv[i],a);
+			}
+		} else {
+			for(var i=0; i<aDiv.length; i++){
+				move(aDiv[i],0);
+			}
+		}	
+	};
+	function move(obj,iTarget){
+		
+		var start = obj.a ||0;
+		
+		var dis = iTarget - start;
+		
+		var count = Math.round(1000/30);
+		var n=0; 
+		clearInterval(obj.timer);
+		obj.timer = setInterval(function(){
+			n++;
+			var cur = start + n/count * dis;
+			
+			obj.a = cur;
+			obj.style.left =  R + R * Math.sin(aTr(cur)) + 'px'; 
+			obj.style.top  =  R - R * Math.cos(aTr(cur)) + 'px'; 
+			
+			if(n == count){
+				clearInterval(obj.timer);
+			}
+		},30);
+	}
+};
+</script>
+</head>
+
+<body>
+<div id="box">
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

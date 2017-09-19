@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>手风琴</title>
+<style>
+#div1{height:150px; margin:20px auto; position:relative; overflow:hidden;}
+#div1 div{position:absolute; left:0; top:0; width:490px;}
+#div1 div span{width:20px; height:150px; text-align:center; line-height:150px; float:left; }
+#div1 div img{float:left;}
+</style>
+<script src="../js/index.js"></script>
+<script>
+window.onload = function(){
+	var oDiv = document.getElementById('div1');
+	var aDiv = oDiv.getElementsByTagName('div');
+	var len = aDiv.length;
+	
+	oDiv.style.width = 490 + 20*(len - 1) + 'px';
+	
+	for(var i=1; i<len; i++){
+		aDiv[i].style.left = 490 + 20 * (i - 1) + 'px';
+	} 
+	
+	for(var i=0; i<len; i++){
+		(function(index){
+			aDiv[i].onmouseover = function(){
+				for(var i=0; i<len; i++){
+					if(i <= index){
+						move(aDiv[i],{left:i*20});
+					} else {
+						move(aDiv[i],{left:490 + 20 * (i - 1)});
+					}
+				}
+			};	
+		})(i);
+	}
+		
+};
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<div>
+    	<span style="background:red;">1</span>
+    	<img src="images/1.jpg" />
+    </div>
+	<div>
+    	<span style="background:yellow;">2</span>
+    	<img src="images/2.jpg" />
+    </div>
+	<div>
+    	<span style="background:green;">3</span>
+    	<img src="images/3.jpg" />
+    </div>
+	<div>
+    	<span style="background:blue;">4</span>
+    	<img src="images/4.jpg" />
+    </div>
+	<div>
+    	<span style="background:pink;">5</span>
+    	<img src="images/5.jpg" />
+    </div>
+</div>
+</body>
+</html>
+
